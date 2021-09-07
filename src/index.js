@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const nodemon = require('nodemon')
+// const nodemon = require('nodemon')
 
 const app = express();
 app.use(bodyParser.json());
@@ -10,8 +10,7 @@ app.get('/', (req, res) =>{
     res.send("tudo okay")
 })
 
-require('./controllers/authController')(app);
-require('./controllers/projectController')(app);
-
+require('./app/controllers/index')(app);
+    
 app.listen(3000);
 

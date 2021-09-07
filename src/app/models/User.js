@@ -1,4 +1,4 @@
-const mongoose = require('../database/index')
+const mongoose = require('../../database/index')
 const bcrypt = require('bcryptjs')
 
 const UserSchema = new mongoose.Schema({
@@ -16,6 +16,14 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
         select: false //com essa notação, quando realizar query, não irá trazer esse campo
+    },
+    passwordResetToken: {
+        type: String,
+        select: false
+    },
+    passwordResetExpires: {
+        type: Date,
+        select: false
     },
     createdAd:{
         type: Date, 
