@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const authconfig = require('../../config/auth.json')
 const router = express.Router();
 const crypto = require('crypto')
-const mailer = require('../../modules/mailer')
+// const mailer = require('../../modules/mailer')
 const nodemailer = require('nodemailer')
 const {host, port, useremail, password,} = require('../../config/mail.json')
 
@@ -49,11 +49,13 @@ router.post('/authenticate', async(req, res) => {
 
     user.password = undefined
 
-
     res.send({
-        user, 
+        _id: user._id,
+        name: user.name,
+        email: user.email,
         token: generateToken({ id: user.id})
-    });
+    })
+
 })
 
 router.post('/forgot_password', async (req, res) => {
@@ -128,6 +130,11 @@ router.post('/reset_password', async (req, res) => {
         res.status(400).send({ error: "Error on reset password. Try again"})
     }
     
+})
+
+router.get('/image_profile/:userId', async (req, res) => {
+    const user = await User.findById(req.params.userId);
+    res.type(user.img.contentType).send(user.img.data);
 })
 
 module.exports = app => app.use('/auth', router);
