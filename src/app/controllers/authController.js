@@ -134,6 +134,8 @@ router.post('/reset_password', async (req, res) => {
 
 router.get('/image_profile/:userId', async (req, res) => {
     const user = await User.findById(req.params.userId);
+    if (!user.img.contentType)
+        return res.status(200)
     res.type(user.img.contentType).send(user.img.data);
 })
 
